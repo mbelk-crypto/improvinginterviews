@@ -1,0 +1,9 @@
+<aura:component description="TestLC" implements="forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader">
+
+    <div class="slds-is-relative spinner">
+        <lightning:spinner aura:id="jobRunning" alternativeText="Loading" size="large"/>
+        <div class="spinnerText">
+            Please Wait. Syncing in progress. This may take a few minutes.
+        </div>
+    </div>
+</aura:component>

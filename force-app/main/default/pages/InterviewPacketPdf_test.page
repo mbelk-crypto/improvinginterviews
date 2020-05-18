@@ -1,0 +1,161 @@
+<apex:page Controller="InterviewPacket" renderAs="pdf">
+    <div style="font-family: {!$Label.interviewPacketFont}">
+        <apex:stylesheet value="{!URLFOR($Resource.InterviewPacketPDF)}"/>
+        <div class="footer">
+            <br/>
+            <div> Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+        </div>
+        <div class="header margin">
+            <div>
+                <apex:image value="{!imageUrl}" height="60" alt="Improving Interviews Logo"
+                            rendered="{!NOT(ISBLANK(imageUrl))}"/>
+                <br/>
+            </div>
+        </div>
+
+
+        <h3>INTERVIEW DETAILS</h3>
+        <hr/>
+        <table>
+            <tr>
+                <td class="key"> Interview For:</td>
+                <td class="value1"> {!Interview.Candidate_Name__r.First_Name__c}
+                    {!Interview.Candidate_Name__r.Last_Name__c}
+                </td>
+                <td class="key"> Location:</td>
+                <td class="value2"> {!Interview.Location__c} </td>
+            </tr>
+            <tr>
+                <td class="key"> Interview With:</td>
+                <td class="value2"> {!Interview.Company__r.Name}  </td>
+                <td class="key"> Interview Date:</td>
+                <td class="value2">
+                    <apex:outputtext value="{0, date, medium}">
+                        <apex:param value="{!Interview.Interview_Date__c}"></apex:param>
+                    </apex:outputtext>
+                </td>
+            </tr>
+            <tr>
+                <td class="key"> Position:</td>
+                <td class="value2"> {!Interview.Job_Record__r.Name}  </td>
+                <td class="key"> Start Time:</td>
+                <td class="value2">
+                    <apex:outputText value="{!StartTime}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="key"> Format:</td>
+                <td class="value2"> {!Interview.Interview_Format__c}</td>
+                <td class="key"> End Time:</td>
+                <td class="value2">
+                    <apex:outputText value="{!EndTime}"/>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <h4>Special Logistics:</h4>
+        <p>{!Interview.Logistics__c}</p>
+        <br/>
+        <h4>Job Description:</h4>
+        <p>
+            <apex:outputText value="{!Interview.Job_Record__r.Description__c}" escape="false"/>
+        </p>
+        <div style="page-break-after:always;"/>
+        <br/>
+        <h3>COMPANY DETAILS</h3>
+        <hr/>
+
+        <h4>Company Information:</h4>
+        <p>{!Interview.Company__r.Description}</p>
+
+        <br/>
+        <h4>Industry Information:</h4>
+        <p>{!Interview.Company__r.Industry_Information__c}</p>
+        <br/>
+        <h4>Notes To Candidate:</h4>
+        <p style="color: red;"> {!Interview.Notes_to_Candidate__c}</p>
+        <br/>
+        <div style="page-break-after:always;"/>
+        <apex:variable var="count" value="{!0}"/> <!-- Count to avoid the last blank page -->
+        <h3>INTERVIEWER</h3>
+        <hr/>
+        <apex:repeat var="interviewer_e" value="{!Interview.Interviewer__r}">
+            <Table style="width: 100%; padding-top: 20px;">
+                <tr>
+                    <th style="width: 180px"> Interviewer Name:</th>
+                    <td> {!interviewer_e.Interviewer_Name__r.FirstName}   {!interviewer_e.Interviewer_Name__r.LastName}</td>
+                </tr>
+                <tr>
+                    <th> Job Title:</th>
+                    <td> {!interviewer_e.Interviewer_Name__r.Title}</td>
+                </tr>
+                <tr>
+                    <th>Role:</th>
+                    <td> {!interviewer_e.Interviewer_Role__c}</td>
+                </tr>
+                <tr>
+                    <th>Focus:</th>
+                    <td> 
+                    </td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td> {!interviewer_e.Interviewer_Name__r.Email}</td>
+                </tr>
+                <tr>
+                    <th>Role:</th>
+                    <td> {!interviewer_e.Interviewer_Name__r.Phone}</td>
+                </tr>
+                <tr>
+                    <th>Reports To:</th>
+                    <td> {!interviewer_e.Reports_To__c}</td>
+                </tr>
+            </Table>
+
+            <br/>
+
+
+            <h4>About:</h4>
+            <p>{!interviewer_e.About_Description__c}</p>
+            <br/>
+
+            <!--   <h4>Hobbies/Personal Interests:</h4>
+            <p><apex:outputText value="{!interviewer_e.Hobbies_Personal_Interest__c}" escape="false"/></p>
+            <br/>-->
+
+            <h4>Interview Tips:</h4>
+            <p>{!interviewer_e.Interview_Tips__c}</p>
+            <br/>
+
+            <h4>Questions to Ask:</h4>
+            <p>
+                <apex:outputText value="{!interviewer_e.Interview_Questions__c}" escape="false"/>
+            </p>
+            <br/>
+            <br/>
+            <h4>Recommended Questions to Ask:</h4>
+            <apex:variable value="{!0}" var="quesNo"/>
+            <apex:repeat var="InterviewQuestion_e" value="{!interviewerMap[interviewer_e].Interview_Questions__r}">
+                <br/>
+                <apex:variable var="quesNo" value="{!quesNo+ 1}"/>
+                <div>
+                    <span style="font-weight: bold;">
+                        <apex:outputText value="{!quesNo}"/>. &nbsp;Question: 
+                    </span>
+                    <apex:outputText value="{!InterviewQuestion_e.Question_Description__c}" escape="false"/>
+                </div>
+                <div>
+                    <span style="font-weight: bold;">
+                        &nbsp; &nbsp; Reason:
+                    </span>
+                    <apex:outputText value="{!InterviewQuestion_e.Question_Record__r.Question_Reason__c}"
+                                     escape="false"/>
+                </div>
+                <br/>
+            </apex:repeat>
+            <apex:variable var="count" value="{!count+ 1}"/>
+
+            <div style="{! IF(Interview.Interviewer__r.size == count , '',  'page-break-after:always;') }"/>
+        </apex:repeat>
+    </div>
+</apex:page>

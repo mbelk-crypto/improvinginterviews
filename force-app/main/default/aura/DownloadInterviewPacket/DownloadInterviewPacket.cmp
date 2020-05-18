@@ -1,0 +1,8 @@
+<aura:component controller="DownloadInterviewPdf" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" 
+                access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:spinner variant="brand" size="large" styleClass="height: 100px;"/>
+    
+    
+</aura:component>

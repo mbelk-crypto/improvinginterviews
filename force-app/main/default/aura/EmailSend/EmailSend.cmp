@@ -1,0 +1,49 @@
+<aura:component controller="EmailSendController" implements="force:lightningQuickAction,force:hasRecordId" >
+        <!--Part 1 [for attribute declare]-->
+        <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+        <aura:attribute name="email" type="string"/>
+        <aura:attribute name="subject" type="string"/>
+        <aura:attribute name="body" type="string"/>
+        <aura:attribute name="iframeUrl" type="string" default=""/>
+        
+        <aura:attribute name="modalOpen" type="boolean" default="false"/>
+        
+    <!---Part 4 [mail fourm part]
+    <aura:if isTrue="{!not(empty(v.email))}" >--> 
+        <div class="slds-m-around--medium">
+            <div class="slds-container--medium">
+                <div class="slds-form--stacked">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="CC">Email</label>
+                        <div class="slds-form-element__control">
+                            <ui:inputEmail class="slds-input" aura:id="email" value="{!v.email}" required="true" placeholder="abc@email.com"/>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="CC">Subject</label>
+                        <div class="slds-form-element__control">
+                            <ui:inputText class="slds-input" aura:id="subject"  value="{!v.subject}" placeholder="Subject"/>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="textareaSample2">Mail Body</label>
+                        <div class="slds-form-element__control">
+                            <lightning:inputRichText aura:id="body" value="{!v.body}" />
+                        </div>
+                    </div>
+                    <div>
+                        <lightning:icon iconName="utility:attach" alternativeText="Attachment" size="x-small"/>
+                        <lightning:button variant="base" label="InterviewPacket.Pdf" title="Show Attachment" onclick="{!c.viewDocument}"/>
+                    </div>
+                    <div class="slds-form-element">
+                        <lightning:button variant="brand" label="Send" title="Send Email" onclick="{! c.sendMail }"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- /aura:if -->
+    <aura:if isTrue="{!not(empty(v.iframeUrl))}" >
+        <iframe src="{!v.iframeUrl}" width="100%" id="viewInterviewPacket" height ="700px" frameborder="0"/>
+    </aura:if>
+        
+    </aura:component>

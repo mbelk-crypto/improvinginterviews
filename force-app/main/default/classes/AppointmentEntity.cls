@@ -1,0 +1,6 @@
+// AppointementEntity
+
+public class AppointmentEntity  {
+
+    
+}

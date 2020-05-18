@@ -1,0 +1,67 @@
+.key{
+    font-weight: bold;
+    width: 120px;
+}
+
+.value1 {
+    width : 150px;
+
+}
+
+.value2 {
+   
+}
+.maxSize{
+    height : 10px;
+    max-width : 10px;    
+}
+td, th {
+   vertical-align: top;
+  text-align: left;
+    height: 25px;
+}
+table{
+    width : 100%;
+}
+h3 {
+    margin-bottom: 0px;
+}
+
+h4, p {
+
+margin: 0px 0px 5px 0px; 
+
+padding: 0px 0px 0px 0px;
+}
+
+@page {
+     margin-top: 20mm;
+    margin-bottom: 20mm;
+    @top-left {
+         
+        content: element(header);
+        
+    }
+    @bottom-left {
+        content: element(footer);
+    }
+}
+
+div.header {
+    height : 80px;
+    padding: 10px;
+    position: running(header);
+}
+div.footer {
+    display: block;
+    padding: 5px;
+    position: running(footer);
+}
+
+.pagenumber:before {
+    content: counter(page);
+}
+
+.pagecount:before {
+    content: counter(pages);
+}
